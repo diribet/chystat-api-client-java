@@ -5,28 +5,34 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import okhttp3.Interceptor;
-import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class OkHttpLogInterceptor implements Interceptor {
 
 	private static final Logger LOG = LoggerFactory.getLogger(OkHttpLogInterceptor.class);
 
 	public static final OkHttpLogInterceptor INSTANCE = new OkHttpLogInterceptor();
 
+	private final HttpLoggingInterceptor loggingInterceptor;
+
+	private OkHttpLogInterceptor() {
+		HttpLoggingInterceptor.Logger logger = LOG::debug;
+		loggingInterceptor = new HttpLoggingInterceptor(logger);
+		loggingInterceptor.setLevel(Level.BODY);
+		loggingInterceptor.redactHeader("Authorization");
+		loggingInterceptor.redactHeader("Cookie");
+	}
+
 	@Override
 	public Response intercept(Chain chain) throws IOException {
-		Request request = chain.request();
-		LOG.debug("Sending {}", request);
-
-		Response response = chain.proceed(request);
-		LOG.debug("Received {}", response);
-
-		return response;
+		if (LOG.isDebugEnabled()) {
+			return loggingInterceptor.intercept(chain);
+		} else {
+			return chain.proceed(chain.request());
+		}
 	}
 
 }

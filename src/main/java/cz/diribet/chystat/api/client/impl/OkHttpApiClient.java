@@ -88,7 +88,7 @@ public class OkHttpApiClient implements IApiClient {
 	}
 
 	protected OkHttpClient.Builder clientBuilder() {
-		return new OkHttpClient.Builder().addNetworkInterceptor(OkHttpLogInterceptor.INSTANCE);
+		return new OkHttpClient.Builder().addInterceptor(OkHttpLogInterceptor.INSTANCE);
 	}
 
 	private ResponsePayload execute(Request request) throws IOException, InvalidResponseException {
