@@ -1,6 +1,6 @@
 # chy.stat API java client
 
-[![Build Status](https://travis-ci.com/diribet/chystat-api-client-java.svg?branch=master)](https://travis-ci.com/diribet/chystat-api-client-java)
+[![Build](https://github.com/diribet/chystat-api-client-java/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/diribet/chystat-api-client-java/actions/workflows/build.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/cz.diribet/chystat-api-client-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cz.diribet/chystat-api-client-java)
 
 A Java client that you can use to work with the public [chy.stat](http://www.chystat.com) API.
